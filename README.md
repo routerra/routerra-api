@@ -174,16 +174,16 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 #### OptimizedStop
 
-| Field              | Type                            | Description                                                       |
-|--------------------|---------------------------------|-------------------------------------------------------------------|
-| `id`               | `number`                        | Unique identifier of the stop                                     |
-| `position`         | `number`                        | Sequence index in optimized route (1 = first stop)                |
-| `location`         | `Location`                      | Stop coordinates and address                                      |
-| `waitTime`         | `null` \| `number`              | Idle time waiting for time window, in seconds                     |
-| `driveTime`        | `number`                        | Travel time from previous point, in seconds                       |
-| `driveDistance`    | `number`                        | Travel distance from previous point, in meters                    |
-| `stopErrorType`    | `null` \| `string`              | Stop-level error, if any                                          |
-| `expectedArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`) | Predicted arrival time at this stop                               |
+| Field              | Type                            | Description                                        |
+|--------------------|---------------------------------|----------------------------------------------------|
+| `id`               | `number`                        | Echo of unique identifier of the stop              |
+| `position`         | `number`                        | Sequence index in optimized route (1 = first stop) |
+| `location`         | `Location`                      | Stop coordinates and address                       |
+| `waitTime`         | `null` \| `number`              | Idle time waiting for time window, in seconds      |
+| `driveTime`        | `number`                        | Travel time from previous point, in seconds        |
+| `driveDistance`    | `number`                        | Travel distance from previous point, in meters     |
+| `stopErrorType`    | `null` \| `string`              | Stop-level error, if any                           |
+| `expectedArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`) | Predicted arrival time at this stop                |
 
 ---
 
