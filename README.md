@@ -63,14 +63,15 @@ Content-Type: application/json
 
 #### Stop
 
-| Field              | Type                                         | Required | Default      | Description                                         |
-|--------------------|----------------------------------------------|:--------:|:------------:|-----------------------------------------------------|
-| `location`         | `Location`                                   |   yes    |    -         |Coordinates and optional address for this stop       |
-| `arrivalRangeFrom` | `string` (`HH:mm`) \| `null`                 |    no    |    -         | Earliest desired arrival time                       |
-| `arrivalRangeTo`   | `string` (`HH:mm`) \| `null`                 |    no    |    -         | Latest desired arrival time                         |
-| `serviceTime`      | `number` \| `null`                           |    no    |   `0`        | Service duration at stop, in seconds                |
-| `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"`       |   yes    |   `"AUTO"`   | AUTO: flexible; EARLIEST / LATEST: hard time windows|
-| `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`             |   yes    |   `"ANY"`    | Preferred side of road to stop                      |
+| Field              | Type                                   | Required | Default      | Description                                          |
+|--------------------|----------------------------------------|:--------:|:------------:|------------------------------------------------------|
+| `id`               | `number`                               |   yes    |    -         | Unique identifier of the stop                        |
+| `location`         | `Location`                             |   yes    |    -         | Coordinates and optional address for this stop       |
+| `arrivalRangeFrom` | `string` (`HH:mm`) \| `null`           |    no    |    -         | Earliest desired arrival time                        |
+| `arrivalRangeTo`   | `string` (`HH:mm`) \| `null`           |    no    |    -         | Latest desired arrival time                          |
+| `serviceTime`      | `number` \| `null`                     |    no    |   `0`        | Service duration at stop, in seconds                 |
+| `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"` |    no    |   `"AUTO"`   | AUTO: flexible; EARLIEST / LATEST: hard time windows |
+| `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`       |    no    |   `"ANY"`    | Preferred side of road to stop                       |
 
 #### OptimizationSettings
 
@@ -167,16 +168,16 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 #### OptimizedStop
 
-| Field              | Type                            | Description                                                       |
-|--------------------|---------------------------------|-------------------------------------------------------------------|
-| `id`               | `number`                        | Unique identifier of the stop                                     |
-| `position`         | `number`                        | Sequence index in optimized route (1 = first stop)                |
-| `location`         | `Location`                      | Stop coordinates and address                                      |
-| `waitTime`         | `null` \| `number`              | Idle time waiting for time window, in seconds                     |
-| `driveTime`        | `number`                        | Travel time from previous point, in seconds                       |
-| `driveDistance`    | `number`                        | Travel distance from previous point, in meters                    |
-| `stopErrorType`    | `null` \| `string`              | Stop-level error, if any                                          |
-| `expectedArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`) | Predicted arrival time at this stop                               |
+| Field              | Type                            | Description                                        |
+|--------------------|---------------------------------|----------------------------------------------------|
+| `id`               | `number`                        | Echo of unique identifier of the stop              |
+| `position`         | `number`                        | Sequence index in optimized route (1 = first stop) |
+| `location`         | `Location`                      | Stop coordinates and address                       |
+| `waitTime`         | `null` \| `number`              | Idle time waiting for time window, in seconds      |
+| `driveTime`        | `number`                        | Travel time from previous point, in seconds        |
+| `driveDistance`    | `number`                        | Travel distance from previous point, in meters     |
+| `stopErrorType`    | `null` \| `string`              | Stop-level error, if any                           |
+| `expectedArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`) | Predicted arrival time at this stop                |
 
 ---
 
