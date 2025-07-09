@@ -47,10 +47,10 @@ Content-Type: application/json
 | Field               | Type                                 | Required | Description                                                      |
 |---------------------|--------------------------------------|:--------:|------------------------------------------------------------------|
 | `startLocation`   | `Location`                           |   yes    | Starting point for the route                                     |
+| `finishLocation`  | `Location` \| `null`                 |    no    | Optional final drop-off location                                 |
+| `stops`           | `Stop[]`                             |   yes    | List of intermediate stops to visit                              |
 | `date`            | `string` (`yyyy-MM-dd`)              |   no     | Optional Departure date in yyyy-MM-dd format. By default current date is used.|
 | `startTime`       | `string` (`HH:mm`)                   |   yes    | Departure time in local 24h format                               |
-| `stops`           | `Stop[]`                             |   yes    | List of intermediate stops to visit                              |
-| `finishLocation`  | `Location` \| `null`                 |    no    | Optional final drop-off location                                 |
 | `optimizeSettings`| `OptimizationSettings`               |   no    | Optional global optimization parameters. Default parameters will be used if none provided. |
 
 #### Location
