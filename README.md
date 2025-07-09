@@ -33,6 +33,7 @@ Content-Type: application/json
 
 ```
 {
+  "id":                 
   "startLocation":      { … },
   "startTime":          "HH:mm",
   "stops":              [ … ],
@@ -45,11 +46,12 @@ Content-Type: application/json
 
 | Icon | Field               | Type                                 | Required | Description                                                      |
 |------|---------------------|--------------------------------------|:--------:|------------------------------------------------------------------|
+| 📍   | **id**              | `long`                               |   yes    | Starting point for the route                                     |
 | 📍   | **startLocation**   | `Location`                           |   yes    | Starting point for the route                                     |
 | 🕒   | **startTime**       | `string` (`HH:mm`)                   |   yes    | Departure time in local 24h format                               |
 | 🛑   | **stops**           | `Stop[]`                             |   yes    | List of intermediate stops to visit                              |
 | 🏁   | **finishLocation**  | `Location` \| `null`                 |    no    | Optional final drop-off location                                 |
-| ⚙️    | **optimizeSettings**| `OptimizationSettings`               |   yes    | Global optimization parameters                                   |
+| ⚙️    | **optimizeSettings**| `OptimizationSettings`               |   no    | Optional global optimization parameters, default one will be used if none provided |
 
 #### Location
 
