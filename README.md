@@ -147,7 +147,6 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 | Icon | Field                   | Type                                       | Description                                                       |
 |------|-------------------------|--------------------------------------------|-------------------------------------------------------------------|
-| ⚠️   | `routeErrorType`        | `null` \| `string`                         | High-level route error, if any                                    |
 | 📊   | `statistics`            | `RouteStatistics`                          | Aggregated route metrics                                          |
 | 📍   | `startLocation`         | `Location`                                 | Echo of the request start location                                |
 | 🕒   | `startLocationDeparture`| `string` (`yyyy-MM-dd'T'HH:mm`)            | Planned departure time from the starting location                 |
