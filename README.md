@@ -18,7 +18,7 @@ API-KEY: <your-key>
 
 ---
 
-## 📥 POST /optimize
+## POST /optimize
 
 Optimize a multi-stop route.
 
@@ -214,7 +214,6 @@ Error responses include:
 
 
 # File Export API Reference
----
 
 ## 📥 POST /routes/{routeId}/export-link/{fileType}
 
