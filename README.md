@@ -215,7 +215,7 @@ Error responses include:
 
 # File Export API Reference
 
-## 📥 POST /routes/{id}/download-link/{fileType}
+## POST /routes/{id}/download-link/{fileType}
 
 Generate a temporary download link for exporting a route in various formats.
 
