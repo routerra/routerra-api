@@ -23,19 +23,18 @@ API-KEY: <your-key>
 ### 📤 Request
 
 ```
-POST /external/v1/optimize HTTP/1.1
-Host: api.routerra.io
-API-KEY: your-key
+POST /optimize
+API-KEY: <your-key>
 Content-Type: application/json
 ```
 
-```
+**Body:**
+```json
 {
-  "id":                 
   "startLocation":      { … },
   "startTime":          "HH:mm",
   "stops":              [ … ],
-  "finishLocation":     { … } | null,
+  "finishLocation":     { … },
   "optimizeSettings":   { … }
 }
 ```
@@ -95,7 +94,7 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
           "longitude": 21.0122,
           "address": "Warsaw, Poland"
         },
-        "date": ""
+        "date": "2025-01-20",
         "startTime": "08:00",
         "stops": [
           {
@@ -127,15 +126,15 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 ## 📤 Response
 
-```
+```json
 {
-  "routeErrorType":       null | string,
+  "routeErrorType":       null,
   "statistics":           { … },
   "startLocation":        { … },
   "stops":                [ … ],
-  "finishLocation":       { … } | null,
-  "finishDriveTime":      null | number,
-  "finishDriveDistance":  null | number,
+  "finishLocation":       { … },
+  "finishDriveTime":      null,
+  "finishDriveDistance":  null,
   "finishLocationArrival":"HH:mm"
 }
 ```
@@ -180,7 +179,7 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 Error responses include:
 
-```
+```json
 {
   "error": {
     "code":    "string",
@@ -192,7 +191,7 @@ Error responses include:
 #### Error Types
 
 **stopErrorType**  
-- 🕑 `CANT_VISIT_TIME_WINDOW` — Time window constraints can’t be met  
+- 🕑 `CANT_VISIT_TIME_WINDOW` — Time window constraints can't be met  
 - 📍 `OUTSIDE_TRANSIT_AREA` — Stop is outside routing area  
 - ⚠️ `INVALID_TIME_WINDOW` — Provided time window invalid
 
@@ -210,25 +209,25 @@ Error responses include:
 - **Defaults**: Per-stop `serviceTime` uses global default if omitted.  
 - **Priority**: `EARLIEST`/`LATEST` enforce hard windows; `AUTO` is flexible.  
 
+---
 
 # File Export API Reference
 
-## Generate a temporary download link for exporting a route in various formats.
+## Generate a temporary download link for exporting a route.
 
 ### 📤 Request
 
 ```
-POST /external/v1/routes/{id}/download-link/{fileType} HTTP/1.1
-Host: api.routerra.io
-API-KEY: your-key
+POST /routes/{id}/download-link/{fileType}
+API-KEY: <your-key>
 ```
 
 #### Path Parameters
 
-| Parameter | Type | Required | Description |
-|------------|----------|:--------:|--------------------------------------------------|
-| `routeId` | `long` | yes | The ID of the route to export |
-| `fileType` | `string` | yes | Export format: `xlsx`, `csv`, or `pdf` |
+| Parameter  | Type     | Required | Description                              |
+|------------|----------|:--------:|------------------------------------------|
+| `id`       | `long`   |   yes    | The ID of the route to export            |
+| `fileType` | `string` |   yes    | Export format: `xlsx`, `csv`, or `pdf`   |
 
 ---
 
@@ -254,22 +253,22 @@ curl -X POST "https://api.routerra.io/external/v1/routes/12345/download-link/xls
 
 #### Response Fields
 
-| Field | Type | Description |
-|---------------|----------|-------------------------------------------------------------------|
-| `downloadUrl` | `string` | Pre-signed URL to download the exported file |
-| `expiresAt` | `number` | URL expiration timestamp (Unix milliseconds) |
-| `filename` | `string` | Suggested filename for the download |
-| `fileType` | `string` | Export format: `XLSX`, `CSV`, or `PDF` |
+| Field         | Type     | Description                                     |
+|---------------|----------|-------------------------------------------------|
+| `downloadUrl` | `string` | Pre-signed URL to download the exported file    |
+| `expiresAt`   | `number` | URL expiration timestamp (Unix milliseconds)    |
+| `filename`    | `string` | Suggested filename for the download             |
+| `fileType`    | `string` | Export format: `XLSX`, `CSV`, or `PDF`          |
 
 ---
 
 ### 📁 Supported File Types
 
-| Type | Content-Type | Description |
-|--------|----------------------------------------|----------------------------------------|
-| `xlsx` | `application/vnd.openxmlformats-...` | Microsoft Excel spreadsheet |
-| `csv` | `text/csv` | Comma-separated values |
-| `pdf` | `application/pdf` | PDF document with route details |
+| Type   | Content-Type                           | Description                     |
+|--------|----------------------------------------|---------------------------------|
+| `xlsx` | `application/vnd.openxmlformats-...`   | Microsoft Excel spreadsheet     |
+| `csv`  | `text/csv`                             | Comma-separated values          |
+| `pdf`  | `application/pdf`                      | PDF document with route details |
 
 ---
 
@@ -278,4 +277,3 @@ curl -X POST "https://api.routerra.io/external/v1/routes/12345/download-link/xls
 - **Link Expiration**: Download URLs are temporary and expire after a set period (check `expiresAt`).
 - **Single Use**: Generate a new link for each download session.
 - **Large Routes**: For routes with many stops, prefer `xlsx` or `csv` for better performance.
-
