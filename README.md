@@ -212,3 +212,75 @@ Error responses include:
 - **Defaults**: Per-stop `serviceTime` uses global default if omitted.  
 - **Priority**: `EARLIEST`/`LATEST` enforce hard windows; `AUTO` is flexible.  
 
+
+
+---
+
+## 📥 POST /routes/{routeId}/export-link/{fileType}
+
+Generate a temporary download link for exporting a route in various formats.
+
+### 📤 Request
+
+```
+POST /external/v1/routes/{routeId}/export-link/{fileType} HTTP/1.1
+Host: api.routerra.io
+API-KEY: your-key
+```
+
+#### Path Parameters
+
+| Parameter | Type | Required | Description |
+|------------|----------|:--------:|--------------------------------------------------|
+| `routeId` | `long` | yes | The ID of the route to export |
+| `fileType` | `string` | yes | Export format: `xlsx`, `csv`, or `pdf` |
+
+---
+
+### 📦 Sample Request (cURL)
+
+```bash
+curl -X POST "https://api.routerra.io/external/v1/routes/12345/export-link/xlsx" \
+  -H "API-KEY: your-key"
+```
+
+---
+
+## 📤 Response
+
+```json
+{
+  "downloadUrl": "https://storage.routerra.io/exports/...",
+  "expiresAt": 1706745600000,
+  "filename": "My Route.xlsx",
+  "fileType": "XLSX"
+}
+```
+
+#### Response Fields
+
+| Field | Type | Description |
+|---------------|----------|-------------------------------------------------------------------|
+| `downloadUrl` | `string` | Pre-signed URL to download the exported file |
+| `expiresAt` | `number` | URL expiration timestamp (Unix milliseconds) |
+| `filename` | `string` | Suggested filename for the download |
+| `fileType` | `string` | Export format: `XLSX`, `CSV`, or `PDF` |
+
+---
+
+### 📁 Supported File Types
+
+| Type | Content-Type | Description |
+|--------|----------------------------------------|----------------------------------------|
+| `xlsx` | `application/vnd.openxmlformats-...` | Microsoft Excel spreadsheet |
+| `csv` | `text/csv` | Comma-separated values |
+| `pdf` | `application/pdf` | PDF document with route details |
+
+---
+
+### 💡 Tips
+
+- **Link Expiration**: Download URLs are temporary and expire after a set period (check `expiresAt`).
+- **Single Use**: Generate a new link for each download session.
+- **Large Routes**: For routes with many stops, prefer `xlsx` or `csv` for better performance.
+
