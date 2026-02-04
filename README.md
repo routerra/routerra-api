@@ -33,6 +33,7 @@ Content-Type: application/json
 {
   "startLocation":      { … },
   "startTime":          "HH:mm",
+  "date":               "yyyy-MM-dd",
   "stops":              [ … ],
   "finishLocation":     { … },
   "optimizeSettings":   { … }
@@ -43,12 +44,12 @@ Content-Type: application/json
 
 | Field               | Type                                 | Required | Description                                                      |
 |---------------------|--------------------------------------|:--------:|------------------------------------------------------------------|
-| `startLocation`   | `Location`                           |   yes    | Starting point for the route                                     |
-| `finishLocation`  | `Location` \| `null`                 |    no    | Optional final drop-off location                                 |
-| `stops`           | `Stop[]`                             |   yes    | List of intermediate stops to visit                              |
-| `date`            | `string` (`yyyy-MM-dd`)              |   no     | Optional Departure date in yyyy-MM-dd format. By default current date is used.|
-| `startTime`       | `string` (`HH:mm`)                   |   yes    | Departure time in local 24h format                               |
-| `optimizeSettings`| `OptimizationSettings`               |   no    | Optional global optimization parameters. Default parameters will be used if none provided. |
+| `startLocation`     | `Location`                           |   yes    | Starting point for the route                                     |
+| `finishLocation`    | `Location` \| `null`                 |    no    | Optional final drop-off location                                 |
+| `stops`             | `Stop[]`                             |   yes    | List of intermediate stops to visit                              |
+| `date`              | `string` (`yyyy-MM-dd`)              |    no    | Departure date. Defaults to current date if not provided         |
+| `startTime`         | `string` (`HH:mm`)                   |   yes    | Departure time in local 24h format                               |
+| `optimizeSettings`  | `OptimizationSettings`               |    no    | Optional optimization parameters. Defaults used if not provided  |
 
 #### Location
 
@@ -62,23 +63,23 @@ Content-Type: application/json
 
 | Field              | Type                                         | Required | Description                                         |
 |--------------------|----------------------------------------------|:--------:|-----------------------------------------------------|
-| `id`               | `long`                                       |   yes    | Identifier number for stop location which can be used to match stops in optimized route response |
+| `id`               | `long`                                       |   yes    | Unique identifier to match stops in response        |
 | `location`         | `Location`                                   |   yes    | Coordinates and optional address for this stop      |
 | `arrivalRangeFrom` | `string` (`HH:mm`) \| `null`                 |    no    | Earliest desired arrival time                       |
 | `arrivalRangeTo`   | `string` (`HH:mm`) \| `null`                 |    no    | Latest desired arrival time                         |
-| `serviceTime`      | `number` \| `null`                           |    no    | Service duration at stop, in seconds. Default 0s if not set. |
-| `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"`       |    no    | AUTO: flexible; EARLIEST / LATEST: hard time windows. Default: AUTO if not set. |
-| `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`             |    no    | Preferred side of road to stop. Default: ANY if not set.                      |
+| `serviceTime`      | `number` \| `null`                           |    no    | Service duration at stop, in seconds. Default: 0    |
+| `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"`       |    no    | AUTO: flexible; EARLIEST/LATEST: hard time windows. Default: AUTO |
+| `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`             |    no    | Preferred side of road to stop. Default: ANY        |
 
 #### OptimizationSettings
 
-| Field            | Type                                                   | Required | Description                                                       |
-|------------------|--------------------------------------------------------|:--------:|-------------------------------------------------------------------|
-| `avoidTolls`     | `boolean`                                              |   no    | If `true`, route avoids toll roads. Default: false                                |
-| `liveRoadData`   | `boolean`                                              |   no    | If `true`, uses real-time traffic data. Default: false                            |
-| `avoidHighway`   | `boolean`                                              |   no    | If `true`, route avoids highways. Default: false                                   |
-| `vehicleType`    | `"BIKE"` \| `"SCOOTER"` \| `"CAR"` \| `"VAN"` \| `"TRUCK"` | no | Vehicle profile for routing. Default: CAR                                        |
-| `optimizeBy`     | `"distance"` \| `"time"`                               |   no    | Primary optimization goal: minimize total distance or time. Default: distance        |
+| Field            | Type                                                      | Required | Description                                              |
+|------------------|-----------------------------------------------------------|:--------:|----------------------------------------------------------|
+| `avoidTolls`     | `boolean`                                                 |    no    | If `true`, route avoids toll roads. Default: false       |
+| `liveRoadData`   | `boolean`                                                 |    no    | If `true`, uses real-time traffic data. Default: false   |
+| `avoidHighway`   | `boolean`                                                 |    no    | If `true`, route avoids highways. Default: false         |
+| `vehicleType`    | `"BIKE"` \| `"SCOOTER"` \| `"CAR"` \| `"VAN"` \| `"TRUCK"` |    no    | Vehicle profile for routing. Default: CAR                |
+| `optimizeBy`     | `"distance"` \| `"time"`                                  |    no    | Optimization goal: minimize distance or time. Default: distance |
 
 ---
 
@@ -128,29 +129,31 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 ```json
 {
-  "routeErrorType":       null,
-  "statistics":           { … },
-  "startLocation":        { … },
-  "stops":                [ … ],
-  "finishLocation":       { … },
-  "finishDriveTime":      null,
-  "finishDriveDistance":  null,
-  "finishLocationArrival":"HH:mm"
+  "statistics":             { … },
+  "startLocation":          { … },
+  "startLocationDeparture": "2025-01-20T08:00",
+  "optimizedStops":         [ … ],
+  "unassignedStops":        [ … ],
+  "finishLocation":         { … },
+  "finishDriveTime":        1800,
+  "finishDriveDistance":    25000,
+  "finishLocationArrival":  "2025-01-20T17:30"
 }
 ```
 
 #### Response Fields
 
-| Field                   | Type                         | Description                                                       |
-|-------------------------|------------------------------|-------------------------------------------------------------------|
-| `routeErrorType`        | `null` \| `string`           | High-level route error, if any                                    |
-| `statistics`            | `RouteStatistics`            | Aggregated route metrics                                          |
-| `startLocation`         | `Location`                   | Echo of the request start location                                |
-| `stops`                 | `OptimizedStop[]`            | Array of planned stops in optimized order                         |
-| `finishLocation`        | `Location` \| `null`         | Echo of request finish location or `null`                         |
-| `finishDriveTime`       | `null` \| `number`           | Travel time from last stop to finish, in seconds                  |
-| `finishDriveDistance`   | `null` \| `number`           | Distance from last stop to finish, in meters                      |
-| `finishLocationArrival` | `string` (`HH:mm`)           | Expected arrival time at finish location                          |
+| Field                    | Type                              | Description                                           |
+|--------------------------|-----------------------------------|-------------------------------------------------------|
+| `statistics`             | `RouteStatistics`                 | Aggregated route metrics                              |
+| `startLocation`          | `Location`                        | Echo of the request start location                    |
+| `startLocationDeparture` | `string` (`yyyy-MM-dd'T'HH:mm`)   | Departure datetime from start location                |
+| `optimizedStops`         | `OptimizedStop[]`                 | Array of stops in optimized order                     |
+| `unassignedStops`        | `OptimizedStop[]`                 | Array of stops that could not be assigned             |
+| `finishLocation`         | `Location` \| `null`              | Echo of request finish location or `null`             |
+| `finishDriveTime`        | `number` \| `null`                | Travel time from last stop to finish, in seconds      |
+| `finishDriveDistance`    | `number` \| `null`                | Distance from last stop to finish, in meters          |
+| `finishLocationArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`)   | Expected arrival datetime at finish location          |
 
 #### RouteStatistics
 
@@ -162,52 +165,39 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 
 #### OptimizedStop
 
-| Field              | Type                        | Description                                                       |
-|--------------------|-----------------------------|-------------------------------------------------------------------|
-| `id`               | `long`                      | Identifier number for stop location which can be used to match stops in optimized route response |
-| `position`         | `number`                    | Sequence index in optimized route (1 = first stop)               |
-| `location`         | `Location`                  | Stop coordinates and address                                      |
-| `waitTime`         | `null` \| `number`          | Idle time waiting for time window, in seconds                     |
-| `driveTime`        | `number`                    | Travel time from previous point, in seconds                       |
-| `driveDistance`    | `number`                    | Travel distance from previous point, in meters                    |
-| `stopErrorType`    | `null` \| `string`          | Stop-level error, if any                                          |
-| `expectedArrival`  | `string` (`HH:mm`)          | Predicted arrival time at this stop                               |
+| Field             | Type                            | Description                                         |
+|-------------------|---------------------------------|-----------------------------------------------------|
+| `id`              | `long`                          | Identifier matching the request stop                |
+| `position`        | `number`                        | Sequence index in optimized route (1 = first stop)  |
+| `location`        | `Location`                      | Stop coordinates and address                        |
+| `waitTime`        | `number` \| `null`              | Idle time waiting for time window, in seconds       |
+| `driveTime`       | `number`                        | Travel time from previous point, in seconds         |
+| `driveDistance`   | `number`                        | Travel distance from previous point, in meters      |
+| `stopErrorType`   | `string` \| `null`              | Stop-level error, if any (see Error Types below)    |
+| `expectedArrival` | `string` (`yyyy-MM-dd'T'HH:mm`) | Predicted arrival datetime at this stop             |
 
 ---
 
 ### ⚠️ Error Handling
 
-Error responses include:
+#### Stop Error Types (`stopErrorType`)
 
-```json
-{
-  "error": {
-    "code":    "string",
-    "message": "string"
-  }
-}
-```
-
-#### Error Types
-
-**stopErrorType**  
-- 🕑 `CANT_VISIT_TIME_WINDOW` — Time window constraints can't be met  
-- 📍 `OUTSIDE_TRANSIT_AREA` — Stop is outside routing area  
-- ⚠️ `INVALID_TIME_WINDOW` — Provided time window invalid
-
-**routeErrorType**  
-- 📐 `MATRIX_CALCULATION_FAILED` — Distance/time matrix calculation failed  
-- 🚧 `ROUTE_OPTIMIZATION_FAILED` — Optimization algorithm failure  
-- 📊 `TOO_MANY_LOCATIONS_FOR_UNKNOWN_REGION` — Too many stops in undefined region  
+| Error                      | Description                                      |
+|----------------------------|--------------------------------------------------|
+| `CANT_VISIT_TIME_WINDOW`   | Time window constraints can't be met             |
+| `OUTSIDE_TRANSIT_AREA`     | Stop is outside routable area                    |
+| `GEOCODE_FAILED`           | Failed to geocode the stop location              |
+| `CAPACITY_EXCEEDED`        | Vehicle capacity exceeded                        |
+| `NO_DRIVER_WITH_ZONE_ACCESS` | Stop is in a zone no driver can access         |
 
 ---
 
 ### 💡 Tips
 
-- **Time formats**: `HH:mm` (24-hour).  
-- **Units**: Distances in km/meters; times in seconds.  
-- **Defaults**: Per-stop `serviceTime` uses global default if omitted.  
-- **Priority**: `EARLIEST`/`LATEST` enforce hard windows; `AUTO` is flexible.  
+- **Time formats**: Request uses `HH:mm`, response uses `yyyy-MM-dd'T'HH:mm`
+- **Units**: Distances in km (statistics) or meters (per-stop); times in seconds
+- **Unassigned stops**: Check `unassignedStops` array for stops that couldn't be optimized
+- **Priority**: `EARLIEST`/`LATEST` enforce hard time windows; `AUTO` is flexible
 
 ---
 
@@ -264,11 +254,11 @@ curl -X POST "https://api.routerra.io/external/v1/routes/12345/download-link/xls
 
 ### 📁 Supported File Types
 
-| Type   | Content-Type                           | Description                     |
-|--------|----------------------------------------|---------------------------------|
-| `xlsx` | `application/vnd.openxmlformats-...`   | Microsoft Excel spreadsheet     |
-| `csv`  | `text/csv`                             | Comma-separated values          |
-| `pdf`  | `application/pdf`                      | PDF document with route details |
+| Type   | Content-Type                                                       | Description                     |
+|--------|--------------------------------------------------------------------|---------------------------------|
+| `xlsx` | `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`| Microsoft Excel spreadsheet     |
+| `csv`  | `text/csv`                                                         | Comma-separated values          |
+| `pdf`  | `application/pdf`                                                  | PDF document with route details |
 
 ---
 
