@@ -215,14 +215,14 @@ Error responses include:
 
 # File Export API Reference
 
-## 📥 POST /routes/{routeId}/export-link/{fileType}
+## 📥 POST /routes/{id}/download-link/{fileType}
 
 Generate a temporary download link for exporting a route in various formats.
 
 ### 📤 Request
 
 ```
-POST /external/v1/routes/{routeId}/export-link/{fileType} HTTP/1.1
+POST /external/v1/routes/{id}/download-link/{fileType} HTTP/1.1
 Host: api.routerra.io
 API-KEY: your-key
 ```
@@ -239,7 +239,7 @@ API-KEY: your-key
 ### 📦 Sample Request (cURL)
 
 ```bash
-curl -X POST "https://api.routerra.io/external/v1/routes/12345/export-link/xlsx" \
+curl -X POST "https://api.routerra.io/external/v1/routes/12345/download-link/xlsx" \
   -H "API-KEY: your-key"
 ```
 
