@@ -18,9 +18,7 @@ API-KEY: <your-key>
 
 ---
 
-## POST /optimize
-
-Optimize a multi-stop route.
+## Optimize a multi-stop route.
 
 ### 📤 Request
 
@@ -215,9 +213,7 @@ Error responses include:
 
 # File Export API Reference
 
-## POST /routes/{id}/download-link/{fileType}
-
-Generate a temporary download link for exporting a route in various formats.
+## Generate a temporary download link for exporting a route in various formats.
 
 ### 📤 Request
 
@@ -249,7 +245,7 @@ curl -X POST "https://api.routerra.io/external/v1/routes/12345/download-link/xls
 
 ```json
 {
-  "downloadUrl": "https://storage.routerra.io/exports/...",
+  "downloadUrl": "https://routerra-exports.s3.amazonaws.com/exports/...",
   "expiresAt": 1706745600000,
   "filename": "My Route.xlsx",
   "fileType": "XLSX"
