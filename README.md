@@ -36,7 +36,9 @@ Content-Type: application/json
   "date":               "yyyy-MM-dd",
   "stops":              [ … ],
   "finishLocation":     { … },
-  "optimizeSettings":   { … }
+  "optimizeSettings":   { … },
+  "saveRoute":          false,
+  "routeName":          "My Route"
 }
 ```
 
@@ -50,6 +52,8 @@ Content-Type: application/json
 | `date`              | `string` (`yyyy-MM-dd`)              |    no    | Departure date. Defaults to current date if not provided         |
 | `startTime`         | `string` (`HH:mm`)                   |   yes    | Departure time in local 24h format                               |
 | `optimizeSettings`  | `OptimizationSettings`               |    no    | Optional optimization parameters. Defaults used if not provided  |
+| `saveRoute`         | `boolean`                            |    no    | If `true`, saves route to database and returns shared link. Default: false |
+| `routeName`         | `string` \| `null`                   |    no    | Name for the saved route. Only used when `saveRoute` is true     |
 
 #### Location
 
@@ -137,7 +141,9 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
   "finishLocation":         { … },
   "finishDriveTime":        1800,
   "finishDriveDistance":    25000,
-  "finishLocationArrival":  "2025-01-20T17:30"
+  "finishLocationArrival":  "2025-01-20T17:30",
+  "routeId":                12345,
+  "sharedLink":             "https://app.routerra.io/shared/abc123..."
 }
 ```
 
@@ -154,6 +160,8 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 | `finishDriveTime`        | `number` \| `null`                | Travel time from last stop to finish, in seconds      |
 | `finishDriveDistance`    | `number` \| `null`                | Distance from last stop to finish, in meters          |
 | `finishLocationArrival`  | `string` (`yyyy-MM-dd'T'HH:mm`)   | Expected arrival datetime at finish location          |
+| `routeId`                | `number` \| `null`                | ID of saved route (only when `saveRoute=true`)        |
+| `sharedLink`             | `string` \| `null`                | URL to access saved route (only when `saveRoute=true`)|
 
 #### RouteStatistics
 
@@ -198,6 +206,7 @@ curl -X POST "https://api.routerra.io/external/v1/optimize" \
 - **Units**: Distances in km (statistics) or meters (per-stop); times in seconds
 - **Unassigned stops**: Check `unassignedStops` array for stops that couldn't be optimized
 - **Priority**: `EARLIEST`/`LATEST` enforce hard time windows; `AUTO` is flexible
+- **Save Route**: Set `saveRoute: true` to persist the optimized route and get a shareable link. The saved route can be accessed via the web app or exported using the File Export API with the returned `routeId`.
 
 ---
 
