@@ -3,7 +3,25 @@ Repository for Routerra API documentation and client side code
 
 About us: https://routerra.io
 Email: info@routerra.io
-# Route Optimization API Reference
+
+---
+
+> ## ⚠️ Deprecation Notice
+>
+> **This API will be shut down on June 9, 2026.**
+>
+> The Routerra single-driver API is being replaced by the **Routerra Teams API**, which supports multi-driver route optimization, team management, and more.
+>
+> **If you are currently using this API, please migrate to the Teams API before the shutdown date.**
+>
+> - **Teams API documentation**: [github.com/routerra/routerra-teams-api](https://github.com/routerra/routerra-teams-api)
+> - **Teams web app**: [teams.routerra.io](https://teams.routerra.io/) — sign up, set up your drivers, and generate an API key under **Settings > Integrations**
+>
+> For migration assistance, contact us at info@routerra.io.
+
+---
+
+# Route Optimization API Reference (Deprecated)
 
 **🔗 Base URL**  
 ```
