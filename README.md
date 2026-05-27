@@ -8,7 +8,7 @@ Email: info@routerra.io
 
 > ## ⚠️ Deprecation Notice
 >
-> **This API will be shut down on June 9, 2026.**
+> **This API will be shut down on June 31, 2026.**
 >
 > The Routerra single-driver API is being replaced by the **Routerra Teams API**, which supports multi-driver route optimization, team management, and more.
 >
