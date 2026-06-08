@@ -341,6 +341,7 @@ Content-Type: application/json
   "arrivalRangeTo":   "12:00",
   "serviceTime":      300,
   "load":             2,
+  "position":         3,
   "priority":         "AUTO",
   "stopSide":         "ANY"
 }
@@ -356,6 +357,7 @@ Content-Type: application/json
 | `arrivalRangeTo`   | `string` (`HH:mm`) \| `null`                 |    no    | Latest desired arrival time                         |
 | `serviceTime`      | `number` \| `null`                           |    no    | Service duration at stop, in seconds. Default: 0    |
 | `load`             | `number` \| `null`                           |    no    | Load units for capacity constraints                 |
+| `position`         | `number` \| `null`                           |    no    | Insert at this position (1-based). Existing stops at or after this position are shifted down. Default: appended at the end |
 | `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"`       |    no    | Time window enforcement mode. Default: AUTO         |
 | `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`             |    no    | Preferred side of road to stop. Default: ANY        |
 
