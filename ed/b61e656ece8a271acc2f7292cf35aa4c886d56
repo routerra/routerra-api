@@ -1,0 +1,19 @@
+README.md
+  s_7bce69bae88765::t_330a095c645c80 429
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "edb61e656ece8a271acc2f7292cf35aa4c886d56",
+  "prompts": {},
+  "sessions": {
+    "s_7bce69bae88765": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6dc7d6df-4c48-4a7e-9c9f-99ec82b9d446",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "mbiloshytskyi <mbiloshytskyi@openraven.com>"
+    }
+  }
+}
