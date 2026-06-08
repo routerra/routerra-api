@@ -1,0 +1,35 @@
+README.md
+  s_7bce69bae88765::t_a450e7cb78f05a 224
+  s_7bce69bae88765::t_c32cb1ef19605a 362
+  s_7bce69bae88765::t_0dd0e5e1ba5d3e 494
+  s_7bce69bae88765::t_9e197ce90ce7ea 430
+  s_7bce69bae88765::t_d04d93f09e774d 481
+  s_7bce69bae88765::t_1af6e1510bf02b 281,289
+  s_7bce69bae88765::t_daefcb9b4cba8e 442,450
+  s_7bce69bae88765::t_187b8e8335056c 135
+  s_7bce69bae88765::t_4eb74149d1c440 255
+  s_7bce69bae88765::t_07bd22c52eca73 309,317
+  s_7bce69bae88765::t_1e4793a1f3df6f 471
+  s_7bce69bae88765::t_54f4c3a2165304 9,216-223,225-254,256-280,282-288,290-301,303-308,310-316,318-361,363-379,381-387,389-429,431-441,443-449,451-463,465-470,472-480,482-493,495-500,502-585
+  s_7bce69bae88765::t_55871adbb85e5a 501
+  s_7bce69bae88765::t_84229a2f38932b 618
+  s_7bce69bae88765::t_a57b4a90e8114e 380,388
+  s_7bce69bae88765::t_428cb3e59325a4 302
+  s_7bce69bae88765::t_527f61619cea62 464
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "047bcc7b9b50626b208b537568c47db7277f25fb",
+  "prompts": {},
+  "sessions": {
+    "s_7bce69bae88765": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6dc7d6df-4c48-4a7e-9c9f-99ec82b9d446",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "mbiloshytskyi <mbiloshytskyi@openraven.com>"
+    }
+  }
+}
