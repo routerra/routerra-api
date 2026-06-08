@@ -426,6 +426,7 @@ Content-Type: application/json
 | `arrivalRangeTo`   | `string` (`HH:mm`) \| `null`                 |    no    | Updated latest arrival time                         |
 | `serviceTime`      | `number` \| `null`                           |    no    | Updated service duration in seconds                 |
 | `load`             | `number` \| `null`                           |    no    | Updated load units                                  |
+| `position`         | `number` \| `null`                           |    no    | Move stop to this position (1-based). Other stops are shifted accordingly. Clamped to valid range |
 | `priority`         | `"AUTO"` \| `"EARLIEST"` \| `"LATEST"`       |    no    | Updated priority                                    |
 | `stopSide`         | `"ANY"` \| `"LEFT"` \| `"RIGHT"`             |    no    | Updated side-of-road preference                     |
 
